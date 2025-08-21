@@ -40,6 +40,34 @@ class ProductController {
       next(error); // passa o erro para o middleware de tratamento de erros
     }
   }
+
+  async update(request: Request, response: Response, next: NextFunction) {
+    try {
+      const id = z
+        .string() // define o tipo do parâmetro 'id' como string
+        .transform((value) => Number(value)) // transforma o parâmetro 'id' em número
+        .refine((value) => !isNaN(value), {
+          // valida se o valor é um número
+          message: "o ID deve ser um número", // mensagem de erro personalizada caso a validação falhe
+        })
+        .parse(request.params.id); // valida e transforma o parâmetro 'id' da rota em um número
+
+      const bodySchema = z.object({
+        name: z.string().trim().min(6), // validação do nome do produto, deve ser uma string com no mínimo 6 caracteres e sem espaços em branco
+        price: z.number().gt(0), // validação do preço do produto, deve ser um número maior que zero
+      });
+
+      const { name, price } = bodySchema.parse(request.body); // valida e extrai os dados do corpo da requisição
+
+      await knex<ProductRepository>("products")
+        .update({ name, price, updated_at: knex.fn.now() }) // atualiza o produto no banco de dados, importando o tipo ProductRepository para garantir a estrutura correta, e atualiza o campo 'updated_at' com a data e hora atual
+        .where({ id }); // filtra o produto pelo ID fornecido
+
+      return response.json(); // retorna resposta JSON indicando que a atualização foi bem-sucedida
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { ProductController };
