@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "@/utils/AppError";
 import { knex } from "@/database/knex";
 import { z } from "zod";
 
@@ -59,6 +60,15 @@ class ProductController {
 
       const { name, price } = bodySchema.parse(request.body); // valida e extrai os dados do corpo da requisição
 
+      const product = await knex<ProductRepository>("products") // busca o produto pelo ID fornecido
+        .select() // seleciona o produto da tabela "products", importando o tipo ProductRepository para garantir a estrutura correta
+        .where({ id }) // filtra pelo ID fornecido
+        .first(); // obtém o primeiro produto encontrado
+
+      if (!product) {
+        throw new AppError("Produto não encontrado"); // lança um erro se o produto não for encontrado
+      }
+
       await knex<ProductRepository>("products")
         .update({ name, price, updated_at: knex.fn.now() }) // atualiza o produto no banco de dados, importando o tipo ProductRepository para garantir a estrutura correta, e atualiza o campo 'updated_at' com a data e hora atual
         .where({ id }); // filtra o produto pelo ID fornecido
@@ -66,6 +76,34 @@ class ProductController {
       return response.json(); // retorna resposta JSON indicando que a atualização foi bem-sucedida
     } catch (error) {
       next(error);
+    }
+  }
+
+  async remove(request: Request, response: Response, next: NextFunction) {
+    try {
+      const id = z
+        .string() // define o tipo do parâmetro 'id' como string
+        .transform((value) => Number(value)) // transforma o parâmetro 'id' em número
+        .refine((value) => !isNaN(value), {
+          // valida se o valor é um número
+          message: "o ID deve ser um número", // mensagem de erro personalizada caso a validação falhe
+        })
+        .parse(request.params.id); // valida e transforma o parâmetro 'id' da rota em um número}
+
+      const product = await knex<ProductRepository>("products") // busca o produto pelo ID fornecido
+        .select() // seleciona o produto da tabela "products", importando o tipo ProductRepository para garantir a estrutura correta
+        .where({ id }) // filtra pelo ID fornecido
+        .first(); // obtém o primeiro produto encontrado
+
+      if (!product) {
+        throw new AppError("Produto não encontrado"); // lança um erro se o produto não for encontrado
+      }
+
+      await knex<ProductRepository>("products").delete().where({ id }); // deleta o produto do banco de dados, importando o tipo ProductRepository para garantir a estrutura correta, filtrando pelo ID fornecido
+
+      return response.json(); // retorna resposta JSON indicando que a remoção foi bem-sucedida
+    } catch (error) {
+      next(error); // passa o erro para o middleware de tratamento de erros
     }
   }
 }
