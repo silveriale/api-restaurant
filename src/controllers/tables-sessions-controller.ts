@@ -51,13 +51,33 @@ class TablesSessionsController {
 
   async update(request: Request, response: Response, next: NextFunction) {
     try {
-      const id = z
-        .string()
-        .transform((value) => Number(value))
+      // Valida o parâmetro de rota id usando zod
+      const id = z // Define o esquema de validação
+        .string() // Define que id deve ser uma string
+        .transform((value) => Number(value)) // Transforma a string em número
         .refine((value) => !isNaN(value), {
-          message: "o id precisa ser um número!",
+          // Verifica se o valor é um número válido
+          message: "o id precisa ser um número!", // Mensagem de erro personalizada para caso n seja um número
         })
-        .parse(request.params.id);
+        .parse(request.params.id); // Extrai o id dos parâmetros da requisição
+
+      const session = await knex<TablesSessionsRepository>("tables_sessions") // Consulta a tabela tables_sessions
+        .where({ id }) // Filtra pela sessão com o ID fornecido
+        .first(); // Obtém a primeira sessão encontrada
+
+      if (!session) {
+        throw new AppError("Sessão não encontrada"); // Lança um erro se a sessão não for encontrada
+      }
+
+      if (session.closed_at) {
+        throw new AppError("Sessão já fechada"); // Lança um erro se a sessão já estiver fechada
+      }
+
+      await knex<TablesSessionsRepository>("tables_sessions")
+        .update({
+          closed_at: knex.fn.now(), // Define closed_at como o horário atual
+        })
+        .where({ id }); // Atualiza a sessão com o ID fornecido
 
       return response.json();
     } catch (error) {
