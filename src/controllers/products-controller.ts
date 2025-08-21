@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { knex } from "@/database/knex";
 import { z } from "zod";
 
 class ProductController {
@@ -20,12 +21,14 @@ class ProductController {
       // lógica para criar um novo produto
       const bodySchema = z.object({
         name: z.string().trim().min(6), // validação do nome do produto, deve ser uma string com no mínimo 6 caracteres e sem espaços em branco
-        price: z.number().gt(0, { message: "Preço deve ser maior que zero" }), // validação do preço do produto, deve ser um número maior que zero
+        price: z.number().gt(0), // validação do preço do produto, deve ser um número maior que zero
       });
 
       const { name, price } = bodySchema.parse(request.body); // valida e extrai os dados do corpo da requisição
 
-      return response.status(201).json({ name, price }); // retorna resposta JSON com o produto criado
+      await knex<ProductRepository>("products").insert({ name, price }); // insere o novo produto no banco de dados, importando o tipo ProductRepository para garantir a estrutura correta
+
+      return response.status(201).json(); // retorna resposta JSON com o produto criado
     } catch (error) {
       // captura erros
       next(error); // passa o erro para o middleware de tratamento de erros

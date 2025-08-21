@@ -1,9 +1,7 @@
-import { connect } from "http2";
-
 export default {
   client: "sqlite3", // define o cliente do banco de dados como SQLite
   connection: {
-    filename: "./src/database/database.sqlite", // caminho do arquivo do banco de dados
+    filename: "./src/database/database.db", // caminho do arquivo do banco de dados
   },
   pool: {
     afterCreate: (connection: any, done: any) => {
