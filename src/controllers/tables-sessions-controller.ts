@@ -8,7 +8,7 @@ class TablesSessionsController {
       const bodySchema = z.object({
         table_id: z.number(),
       });
-      
+
       const { table_id } = bodySchema.parse(request.body);
 
       await knex<TablesSessionsRepository>("tables_sessions").insert({
@@ -22,5 +22,6 @@ class TablesSessionsController {
     }
   }
 }
+//commit anterior com descricao errada
 
 export { TablesSessionsController };
