@@ -5,5 +5,6 @@ const productsRoutes = Router(); // define a rota para produtos
 const productController = new ProductController(); // instancia o controlador de produtos
 
 productsRoutes.get("/", productController.index); // define a rota GET para listar produtos usando o método index do controlador
+productsRoutes.post("/", productController.create); // define a rota POST para criar um novo produto usando o método create do controlador
 
 export { productsRoutes };
