@@ -1,11 +1,16 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "@/utils/AppError";
 
 class ProductController {
-  async index(request: Request, response: Response, next: NextFunction) { 
+  // controlador de produtos
+  async index(request: Request, response: Response, next: NextFunction) {
+    // método para listar produtos
     try {
-      response.json({ message: "ok" });
+      // lógica para listar produtos
+      response.json({ message: "ok" }); // retorna resposta JSON com mensagem de sucesso
     } catch (error) {
-      next(error);
+      // captura erros
+      next(error); // passa o erro para o middleware de tratamento de erros
     }
   }
 }
