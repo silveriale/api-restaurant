@@ -52,7 +52,21 @@ class OrdersController {
 
   async index(request: Request, response: Response, next: NextFunction) {
     try {
-      return response.json();
+      const { table_session_id } = request.params; // extrai o id da sessão da mesa dos parâmetros da rota
+
+      const order = await knex("orders") // busca os pedidos da sessão da mesa
+        .select(
+          "orders.id",
+          "orders.table_session_id",
+          "orders.product_id",
+          "products.name",
+          "orders.price",
+          "orders.quantity"
+        ) // seleciona os campos que serão retornados
+        .join("products", "products.id", "orders.product_id") // faz um join com a tabela de produtos para pegar o nome do produto
+        .where({ table_session_id }); // filtra pela id da sessão da mesa
+
+      return response.json(order); // retorna os pedidos encontrados
     } catch (error) {
       next(error);
     }
