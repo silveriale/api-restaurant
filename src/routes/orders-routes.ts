@@ -6,5 +6,9 @@ const ordersController = new OrdersController(); // cria uma nova instância do 
 
 ordersRoutes.post("/", ordersController.create); // define a rota POST / e associa ao método create do controlador
 ordersRoutes.get("/table-session/:table_session_id", ordersController.index); // define a rota GET /table-session/:table_session_id e associa ao método index do controlador
+ordersRoutes.get(
+  "/table-session/:table_session_id/total",
+  ordersController.show
+); // define a rota GET /table-session/:id/total e associa ao método show do controlador
 
 export { ordersRoutes };

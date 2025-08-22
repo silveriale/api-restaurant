@@ -75,6 +75,24 @@ class OrdersController {
       next(error);
     }
   }
+
+  async show(request: Request, response: Response, next: NextFunction) {
+    try {
+      const { table_session_id } = request.params; // extrai o id da sessão da mesa dos parâmetros da rota
+
+      const order = await knex("orders") // busca os pedidos da sessão da mesa
+        .select(
+          knex.raw("COALESCE(SUM(orders.price * orders.quantity), 0) AS total"), // calcula o total dos pedidos, se não houver pedidos, retorna 0
+          knex.raw("COALESCE(SUM(orders.quantity), 0) AS quantity") // calcula a quantidade total dos pedidos, se não houver pedidos, retorna 0
+        )
+        .where({ table_session_id }) // filtra pela id da sessão da mesa
+        .first();
+
+      return response.json(order);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export { OrdersController };
