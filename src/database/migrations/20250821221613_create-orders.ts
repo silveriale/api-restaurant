@@ -16,7 +16,7 @@ export async function up(knex: Knex): Promise<void> {
       table.integer("quantity").notNullable(), // Cria a coluna quantity que não pode ser nula
       table.decimal("price").notNullable(), // Cria a coluna price que não pode ser nula
       table.timestamp("created_at").defaultTo(knex.fn.now()), // Cria a coluna created_at com o horário atual como padrão
-      table.timestamp("updated_at").nullable(); // Cria a coluna update_at que pode ser nula
+      table.timestamp("updated_at").defaultTo(knex.fn.now()); // Cria a coluna update_at com o horário atual como padrão
   });
 }
 

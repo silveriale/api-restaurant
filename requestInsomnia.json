@@ -1,0 +1,358 @@
+type: collection.insomnia.rest/5.0
+name: API Restaurant
+meta:
+  id: wrk_c15049b9fb5441e8b528988b34d76470
+  created: 1755783019134
+  modified: 1755783019134
+  description: ""
+collection:
+  - name: Products
+    meta:
+      id: fld_dcfc0278cd03468db491bd137e4fbed5
+      created: 1755783381428
+      modified: 1755783499476
+      sortKey: -1755783381428
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_9ae577f04500440f87e13354c54f4e91
+          created: 1755783501027
+          modified: 1755799207545
+          isPrivate: false
+          description: ""
+          sortKey: -1755783501027
+        method: GET
+        parameters:
+          - id: pair_199459a4267a495ab0bfb19ad1dfb7d1
+            name: name
+            value: ""
+            description: ""
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Create
+        meta:
+          id: req_cdd7046b23d5481e964b416c22b5525d
+          created: 1755795334608
+          modified: 1755883114304
+          isPrivate: false
+          description: ""
+          sortKey: -1755795334608
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Sorvete de chocolate",
+            	"price":69.90
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/36"
+        name: Update
+        meta:
+          id: req_aa5351a06b924230be16fbc4849270ee
+          created: 1755799496622
+          modified: 1755883162984
+          isPrivate: false
+          description: ""
+          sortKey: -1755799496622
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "Sorvete de chocolate",
+            	"price":15
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/33"
+        name: Remove
+        meta:
+          id: req_ba7b076ae22f4b43971f6b9b42c767ab
+          created: 1755800959031
+          modified: 1755883213855
+          isPrivate: false
+          description: ""
+          sortKey: -1755800959031
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: products
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: Tables
+    meta:
+      id: fld_351bc063f3114de7af8b5ce01f1337c5
+      created: 1755805475296
+      modified: 1755807691739
+      sortKey: -1755805475296
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_4038abe9fd1f43d38f3eddfcdabd67f5
+          created: 1755805531776
+          modified: 1755805556229
+          isPrivate: false
+          description: ""
+          sortKey: -1755805531776
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: tables
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: Tables Sessions
+    meta:
+      id: fld_1f94f3f4c8104c86af5f6eeca9384fa1
+      created: 1755807649604
+      modified: 1755868388767
+      sortKey: -1755806562450
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Open
+        meta:
+          id: req_209395a56a37458e81483cac2a371c5f
+          created: 1755807725008
+          modified: 1755883017900
+          isPrivate: false
+          description: ""
+          sortKey: -1755807725008
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"table_id": 4
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Index
+        meta:
+          id: req_cf8ad48a2a614ac0994757178cc6eaad
+          created: 1755811991569
+          modified: 1755812015020
+          isPrivate: false
+          description: ""
+          sortKey: -1755811991569
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/4"
+        name: Close
+        meta:
+          id: req_fc3dad14f72d409a92e754284ca88578
+          created: 1755812638108
+          modified: 1755883354932
+          isPrivate: false
+          description: ""
+          sortKey: -1755812638108
+        method: PATCH
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: tables-sessions
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+  - name: Orders
+    meta:
+      id: fld_6b63d243251a43c8a61b9c3d09729a9d
+      created: 1755868329680
+      modified: 1755868408781
+      sortKey: -1755868329680
+      description: ""
+    children:
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}"
+        name: Create
+        meta:
+          id: req_7aa66630afb94437af2bb5570ddf52a9
+          created: 1755868333787
+          modified: 1755884012802
+          isPrivate: false
+          description: ""
+          sortKey: -1755868333787
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"table_session_id": 2,
+            	"product_id": 34,
+            	"quantity": 2
+            	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/table-session/2"
+        name: Index by table session
+        meta:
+          id: req_57555e8b1f5a44adb69eb68a07b8dea6
+          created: 1755870522916
+          modified: 1755884019595
+          isPrivate: false
+          description: ""
+          sortKey: -1755870522916
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.BASE_URL }}/{{ _.RESOURCE }}/table-session/2/total"
+        name: Show by table session
+        meta:
+          id: req_0b4281784ac4495293ccae5d035a6558
+          created: 1755881424879
+          modified: 1755884029276
+          isPrivate: false
+          description: ""
+          sortKey: -1755881424879
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.4.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    environment:
+      RESOURCE: orders
+    environmentPropertyOrder:
+      "&":
+        - RESOURCE
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_21725bf3d093106681b56c183c1891b7067de7f1
+    created: 1755783019136
+    modified: 1755783019136
+environments:
+  name: Base Environment
+  meta:
+    id: env_21725bf3d093106681b56c183c1891b7067de7f1
+    created: 1755783019135
+    modified: 1755783019135
+    isPrivate: false
+  subEnvironments:
+    - name: Dev
+      meta:
+        id: env_bf875636746a4240873e43edab4e80a1
+        created: 1755783210229
+        modified: 1755783309392
+        isPrivate: false
+        sortKey: 1755783210228
+      data:
+        BASE_URL: localhost:3333
+      color: "#75ffef"
