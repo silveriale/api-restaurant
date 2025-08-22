@@ -37,7 +37,14 @@ class OrdersController {
         throw new AppError("O produto não existe.");
       } // se o produto não existir, lança um erro
 
-      return response.status(201).json(product);
+      await knex<OrderRepository>("orders").insert({
+        table_session_id,
+        product_id,
+        quantity,
+        price: product.price,
+      });
+
+      return response.status(201).json();
     } catch (error) {
       next(error);
     }
