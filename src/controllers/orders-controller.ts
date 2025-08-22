@@ -61,10 +61,14 @@ class OrdersController {
           "orders.product_id",
           "products.name",
           "orders.price",
-          "orders.quantity"
+          "orders.quantity",
+          knex.raw("(orders.price * orders.quantity) AS total"), // calcula o total do pedido
+          "orders.created_at",
+          "orders.updated_at"
         ) // seleciona os campos que serão retornados
         .join("products", "products.id", "orders.product_id") // faz um join com a tabela de produtos para pegar o nome do produto
-        .where({ table_session_id }); // filtra pela id da sessão da mesa
+        .where({ table_session_id }) // filtra pela id da sessão da mesa
+        .orderBy("orders.created_at", "asc"); // ordena os pedidos pela data de criação em ordem crescente
 
       return response.json(order); // retorna os pedidos encontrados
     } catch (error) {
